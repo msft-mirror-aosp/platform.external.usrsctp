@@ -39,6 +39,7 @@ cc_library_static {
         "-Wno-deprecated-declarations",
         "-Wno-unused-parameter",
         "-Wno-address-of-packed-member",
+        "-Wno-unreachable-code-loop-increment",
         "-DSCTP_PROCESS_LEVEL_LOCKS",
         "-DSCTP_SIMPLE_ALLOCATOR",
         "-DSCTP_USE_OPENSSL_SHA1",
