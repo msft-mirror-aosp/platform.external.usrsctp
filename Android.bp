@@ -1,5 +1,7 @@
 cc_library_static {
     name: "usrsctplib",
+    // vendor needed for libpreprocessing effects.
+    vendor: true,
     srcs: [
         "usrsctplib/netinet/sctp_asconf.c",
         "usrsctplib/netinet/sctp_auth.c",
@@ -50,10 +52,9 @@ cc_library_static {
         "-D_GNU_SOURCE",
         // TODO has different build flags for mac
     ],
-    static_libs: [
+    shared_libs: [
         "libcrypto",
     ],
     host_supported: true,
-    device_supported: false,
     visibility: ["//external/webrtc:__subpackages__"],
 }
