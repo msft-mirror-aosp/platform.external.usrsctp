@@ -1,7 +1,5 @@
-cc_library_static {
-    name: "usrsctplib",
-    // vendor needed for libpreprocessing effects.
-    vendor: true,
+cc_defaults {
+    name: "usrsctplib_defaults",
     srcs: [
         "usrsctplib/netinet/sctp_asconf.c",
         "usrsctplib/netinet/sctp_auth.c",
@@ -56,5 +54,47 @@ cc_library_static {
         "libcrypto",
     ],
     host_supported: true,
+}
+
+cc_library_static {
+    name: "usrsctplib",
+    // vendor needed for libpreprocessing effects.
+    vendor: true,
+    defaults: ["usrsctplib_defaults"],
     visibility: ["//external/webrtc:__subpackages__"],
+}
+
+cc_library_static {
+    name: "usrsctp_fuzz_lib",
+    defaults: ["usrsctplib_defaults"],
+}
+
+cc_fuzz {
+    name: "fuzzer_connect",
+    srcs: [
+        "fuzzer/fuzzer_connect.c",
+    ],
+    static_libs: [
+        "usrsctp_fuzz_lib",
+    ],
+    shared_libs: [
+        "libcrypto",
+    ],
+    host_supported: true,
+    corpus: ["CORPUS_CONNECT/*"],
+}
+
+cc_fuzz {
+    name: "fuzzer_listen",
+    srcs: [
+        "fuzzer/fuzzer_listen.c",
+    ],
+    static_libs: [
+        "usrsctp_fuzz_lib",
+    ],
+    shared_libs: [
+        "libcrypto",
+    ],
+    host_supported: true,
+    corpus: ["CORPUS_LISTEN/*"],
 }
