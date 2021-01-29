@@ -34,6 +34,7 @@
 #include <stdarg.h>
 #include <assert.h>
 #include <usrsctp.h>
+#include <openssl/sha.h>
 #include "../programs/programs_helper.h"
 
 //#define FUZZ_VERBOSE
@@ -67,6 +68,9 @@ static uint32_t assoc_vtag = 0;
 
 static void
 dump_packet(const void *buffer, size_t bufferlen, int inout) {
+(void) buffer;
+(void) bufferlen;
+(void) inout;
 #ifdef FUZZ_VERBOSE
 	static char *dump_buf;
 	if ((dump_buf = usrsctp_dumppacket(buffer, bufferlen, inout)) != NULL) {
@@ -80,6 +84,9 @@ dump_packet(const void *buffer, size_t bufferlen, int inout) {
 static int
 conn_output(void *addr, void *buf, size_t length, uint8_t tos, uint8_t set_df)
 {
+	(void) addr;
+	(void) tos;
+	(void) set_df;
 	struct sctp_init_chunk *init_chunk;
 	const char *init_chunk_first_bytes = "\x13\x88\x13\x89\x00\x00\x00\x00\x00\x00\x00\x00\x01";
 	// Looking for the outgoing VTAG.
@@ -99,6 +106,8 @@ conn_output(void *addr, void *buf, size_t length, uint8_t tos, uint8_t set_df)
 static void
 handle_upcall(struct socket *sock, void *arg, int flgs)
 {
+	(void) arg;
+	(void) flgs;
 	fuzzer_printf("handle_upcall()\n");
 	int events = usrsctp_get_events(sock);
 
@@ -442,6 +451,4 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t data_size)
 
 	return (0);
 }
-
-
 
