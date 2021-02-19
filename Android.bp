@@ -1,3 +1,20 @@
+package {
+    default_applicable_licenses: ["external_usrsctp_license"],
+}
+
+// Added automatically by a large-scale-change
+// See: http://go/android-license-faq
+license {
+    name: "external_usrsctp_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD",
+    ],
+    license_text: [
+        "LICENSE.md",
+    ],
+}
+
 cc_defaults {
     name: "usrsctplib_defaults",
     srcs: [
